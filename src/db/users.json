@@ -1,0 +1,58 @@
+[
+  {
+    "id": "1",
+    "login": "Masha",
+    "password": "qwerty12345",
+    "age": 66,
+    "isDeleted": false
+  },
+  {
+    "id": "2",
+    "login": "Mashenka",
+    "password": "22",
+    "age": 42,
+    "isDeleted": false
+  },
+  {
+    "id": "3",
+    "login": "Mama",
+    "password": "22",
+    "age": 21,
+    "isDeleted": false
+  },
+  {
+    "id": "4",
+    "login": "Masha",
+    "password": "22",
+    "age": 45,
+    "isDeleted": false
+  },
+  {
+    "id": "5",
+    "login": "Olya",
+    "password": "22",
+    "age": 34,
+    "isDeleted": false
+  },
+  {
+    "id": "6",
+    "login": "Misha",
+    "password": "22",
+    "age": 55,
+    "isDeleted": false
+  },
+  {
+    "id": "7",
+    "login": "Vasya",
+    "password": "22",
+    "age": 23,
+    "isDeleted": false
+  },
+  {
+    "id": "8",
+    "login": "Sasha",
+    "password": "33",
+    "age": 34,
+    "isDeleted": true
+  }
+]
