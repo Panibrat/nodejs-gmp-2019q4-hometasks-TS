@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import indexRouter from './routes';
 import usersRouter from './routes/users';
 

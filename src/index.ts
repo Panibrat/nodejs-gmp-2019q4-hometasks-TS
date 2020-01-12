@@ -1,6 +1,6 @@
 import app from './app';
-import * as http from 'http';
-import * as dotenv from 'dotenv';
+import http from 'http';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -20,5 +20,5 @@ function onError(error) {
 }
 
 function onListening() {
-    console.log(`Server is started on port 33 ${port}`);
+    console.log(`Server is started on port ${port}`);
 }

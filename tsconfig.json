@@ -1,17 +1,17 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "dist",
     "moduleResolution": "node",
     "module": "commonjs",
-    "allowJs": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
-    "rootDir": "./",
+    "allowJs": true,
+    "esModuleInterop": true,
     "target": "es6"
   },
-  "files": [
-    "src/app.d.ts"
-  ],
+  "lib": ["es2015"],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }

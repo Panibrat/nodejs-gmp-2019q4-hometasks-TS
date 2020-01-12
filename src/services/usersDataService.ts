@@ -1,17 +1,9 @@
-// import users from '../db/users.json';
+import users from '../db/users.json';
 import uuidv1 from 'uuid/v1';
 
-const users = [
-    {
-        id: 1,
-        login: "Mama",
-        password: "22",
-        age: 21,
-        isDeleted: false
-    }
-];
+import { UserData } from './types';
 
-const clearObject = obj => {
+const clearObject = (obj: object): object => {
     Object.keys(obj).forEach(key => {
         if (obj[key] === null || obj[key] === undefined) {
             delete obj[key];
@@ -21,16 +13,16 @@ const clearObject = obj => {
 };
 
 class UserService {
-    userList;
+    userList: UserData[];
     constructor(initUsers = []) {
         this.userList = initUsers;
     }
 
-    getAllUsers() {
+    public getAllUsers(): UserData[] {
         return this.userList.filter(user => !user.isDeleted);
     }
 
-    getUserById(id) {
+    public getUserById(id: string): UserData {
         const userIndex = this.userList.findIndex(user => user.id === id);
         if (userIndex > -1 && !this.userList[userIndex].isDeleted) {
             return this.userList[userIndex];
@@ -38,7 +30,7 @@ class UserService {
         return null;
     }
 
-    removeUserById(id) {
+    public removeUserById(id: string): UserData {
         const user = this.getUserById(id);
         if (user) {
             user.isDeleted = true;
@@ -47,7 +39,7 @@ class UserService {
         return null;
     }
 
-    updateUserById(id, payload) {
+    public updateUserById(id: string, payload: UserData): UserData {
         const { login, password, age } = payload;
         const updateValuesObject = clearObject({ login, password, age });
         let user = this.getUserById(id);
@@ -58,8 +50,8 @@ class UserService {
         return null;
     }
 
-    createUser({ login, password, age }) {
-        const newUser = {
+    public createUser({ login, password, age }): UserData {
+        const newUser: UserData = {
             login,
             password,
             age,
@@ -70,12 +62,12 @@ class UserService {
         return newUser;
     }
 
-    getAutoSuggestUsers(loginSubstring, limit) {
+    public getAutoSuggestUsers(loginSubstring: string, limit: number): UserData[] {
         const getUsersByLoginSubstring = (substring) => {
             return this.userList
                 .filter(user => !user.isDeleted && user.login.startsWith(substring))
                 .sort((a, b) => {
-                    return a.login > b.login;
+                    return a.login > b.login ? 1 : -1;
                 });
         };
         if (loginSubstring && limit) {
@@ -88,7 +80,7 @@ class UserService {
             return this.userList
                 .filter(user => !user.isDeleted)
                 .sort((a, b) => {
-                    return a.login > b.login;
+                    return a.login > b.login ? 1 : -1;
                 })
                 .slice(0, Number(limit));
         }

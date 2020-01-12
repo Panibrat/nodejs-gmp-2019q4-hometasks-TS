@@ -1,4 +1,4 @@
-import * as Joi from '@hapi/joi';
+import Joi from '@hapi/joi';
 
 const userUpdateSchema = Joi.object(
     {
