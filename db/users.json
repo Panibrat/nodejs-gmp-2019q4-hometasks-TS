@@ -1,0 +1,74 @@
+[
+  {
+    "login": "Leanne",
+    "password": "qwerty12345",
+    "age": 32,
+    "isDeleted": false
+  },
+  {
+    "login": "Ervin",
+    "password": "qwerty12345",
+    "age": 45,
+    "isDeleted": false
+  },
+  {
+    "login": "Clementine",
+    "password": "qwerty12345",
+    "age": 23,
+    "isDeleted": false
+  },
+  {
+    "login": "Karianne",
+    "password": "qwerty12345",
+    "age": 43,
+    "isDeleted": false
+  },
+  {
+    "login": "Masha",
+    "password": "qwerty12345",
+    "age": 66,
+    "isDeleted": false
+  },
+  {
+    "login": "Mashenka",
+    "password": "vsdersedzv",
+    "age": 42,
+    "isDeleted": false
+  },
+  {
+    "login": "Lyubov",
+    "password": "freasfg",
+    "age": 63,
+    "isDeleted": false
+  },
+  {
+    "login": "Masha",
+    "password": "SFvfssdr22",
+    "age": 45,
+    "isDeleted": false
+  },
+  {
+    "login": "Olya",
+    "password": "2sdf2",
+    "age": 34,
+    "isDeleted": false
+  },
+  {
+    "login": "Misha",
+    "password": "dfsfsdf",
+    "age": 55,
+    "isDeleted": false
+  },
+  {
+    "login": "Vasya",
+    "password": "5346456",
+    "age": 23,
+    "isDeleted": false
+  },
+  {
+    "login": "Sasha",
+    "password": "zxcvw545gd",
+    "age": 34,
+    "isDeleted": true
+  }
+]
