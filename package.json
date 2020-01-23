@@ -8,11 +8,11 @@
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
-    "serve": "node dist/src/index.js",
+    "serve": "node dist/index.js",
     "start-server": "nodemon --exec dist/index.js",
-    "db:create": "cd db && npx sequelize-cli db:create",
-    "db:migrate": "cd db && npx sequelize-cli db:migrate",
-    "db:seed": "cd db && npx sequelize-cli db:seed:all"
+    "db:create": "cd src && npx sequelize-cli db:create",
+    "db:migrate": "cd src && npx sequelize-cli db:migrate",
+    "db:seed": "cd src && npx sequelize-cli db:seed:all"
   },
   "author": "Oleksandr Panibratenko",
   "license": "ISC",

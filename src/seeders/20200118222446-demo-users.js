@@ -1,5 +1,5 @@
 'use strict';
-const users = require('../users.json');
+const users = require('../db/users.json');
 
 module.exports = {
     up: (queryInterface, Sequelize) => {

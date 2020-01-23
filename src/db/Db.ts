@@ -10,7 +10,7 @@ const sequelize = new Sequelize(dbUri, {
 });
 
 class Db {
-    sequelize: any;
+    sequelize;
     constructor(sq) {
         this.sequelize = sq;
     }
