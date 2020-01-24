@@ -1,4 +1,4 @@
-import db from '../db/Db';
+import db from '../db/db';
 import { DataTypes, Model } from 'sequelize';
 
 const sequelize = db.getSequelize();

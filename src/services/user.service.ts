@@ -1,5 +1,5 @@
 import { Op } from 'sequelize';
-import { User } from '../models/userModel';
+import { User } from '../models/user.module';
 
 export class UserService {
     static getAll(search, limit) {

@@ -1,7 +1,7 @@
 import express from 'express';
 import indexRouter from './routes';
 import usersRouter from './routes/users';
-import db from './db/Db';
+import db from './db/db';
 
 db.testConnection();
 
