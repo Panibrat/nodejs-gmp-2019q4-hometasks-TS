@@ -14,11 +14,7 @@ export class UserService {
             attributes: ['id', 'login', 'age'],
             limit: searchLimit,
             order: ['login']
-        })
-            .catch(e => {
-                console.log('[DB ERROR] ', e);
-                return null;
-            });
+        });
     }
 
     static getById(id) {
@@ -28,76 +24,43 @@ export class UserService {
                 isDeleted: false
             },
             attributes: ['id', 'login', 'age']
-        })
-            .catch(e => {
-                console.log('[DB ERROR] ', e);
-            return null;
         });
     }
 
     static create({ login, password, age }) {
-        return User.create({ login, password, age })
-            .then( user => {
-                return User.findOne({
-                    where: {
-                        id: user.id,
-                    },
-                    attributes: ['id', 'login', 'age']
-                })
-            })
-            .catch(e => {
-                console.log('[DB ERROR] ', e);
-                return null;
-            });
+        return User.create({ login, password, age });
     }
 
-    static update(id, payload) {
-        return User.update(
-            { ...payload },
-            {
-                where: {
-                    id: id,
-                    isDeleted: false
-                }
-            }
-            ).then( () => {
-                return User.findOne({
-                    where: {
-                        id: id,
-                        isDeleted: false
-                    },
-                    attributes: ['id', 'login', 'age']
-                })
-             })
-            .catch(e => {
-                console.log('[DB ERROR] ', e);
-                return null;
-            })
+    static async update(id, payload) {
+        const { login, password, age } = payload;
+        const user = await User
+            .findOne({
+                         where: {
+                             id: id,
+                             isDeleted: false,
+                         }
+                     });
+        if (user) {
+            user.login = login ? login : user.login;
+            user.password = password ? password : user.password;
+            user.age = age ? age : user.age;
+            return user.save();
+        }
+        return null;
     }
 
-    static delete(id) {
-        return User.update(
-            {isDeleted: true},
-            {
-                where: {
-                    id: id,
-                    isDeleted: false
-                }
-            }
-            ).then( (status) => {
-                if (status[0] === 0) {
-                    return null;
-                }
-                return User.findOne({
-                    where: {
-                        id: id
-                    },
-                    attributes: ['id', 'login', 'age']
-                })
-             })
-            .catch(e => {
-                console.log('[DB ERROR] ', e);
-                return null;
-            })
+    static async delete(id) {
+        const user = await User
+            .findOne({
+                         where: {
+                             id: id,
+                             isDeleted: false,
+                         }
+                     });
+        if (user) {
+            user.isDeleted = true;
+            return user.save();
+        }
+        return null;
     }
 }
