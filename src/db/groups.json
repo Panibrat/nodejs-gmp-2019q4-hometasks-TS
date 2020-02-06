@@ -1,0 +1,48 @@
+[
+  {
+    "name": "Admin",
+    "permissions": [
+      "READ",
+      "WRITE",
+      "DELETE",
+      "SHARE",
+      "UPLOAD_FILES"
+    ]
+  },
+  {
+    "name": "Reader",
+    "permissions": [
+      "READ"
+    ]
+  },
+  {
+    "name": "Creator",
+    "permissions": [
+      "READ",
+      "WRITE",
+      "SHARE"
+    ]
+  },
+  {
+    "name": "Assistant",
+    "permissions": [
+      "READ",
+      "SHARE",
+      "UPLOAD_FILES"
+    ]
+  },
+  {
+    "name": "User",
+    "permissions": [
+      "READ",
+      "WRITE"
+    ]
+  },
+  {
+    "name": "Seo",
+    "permissions": [
+      "READ",
+      "SHARE"
+    ]
+  }
+]
