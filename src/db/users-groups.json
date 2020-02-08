@@ -1,0 +1,26 @@
+[
+  {
+    "UserId": 1,
+    "GroupId": 2
+  },
+  {
+    "UserId": 1,
+    "GroupId": 5
+  },
+  {
+    "UserId": 1,
+    "GroupId": 3
+  },
+  {
+    "UserId": 2,
+    "GroupId": 1
+  },
+  {
+    "UserId": 2,
+    "GroupId": 2
+  },
+  {
+    "UserId": 2,
+    "GroupId": 5
+  }
+]

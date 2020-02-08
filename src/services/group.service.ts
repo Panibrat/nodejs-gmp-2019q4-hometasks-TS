@@ -6,7 +6,7 @@ export class GroupService {
     }
 
     static getById(id) {
-        return Group.findOne({ where: { id } });
+        return Group.findByPk(id);
     }
 
     static create({ name, permissions }) {
@@ -15,7 +15,7 @@ export class GroupService {
 
     static async update(id, payload) {
         const { name, permissions } = payload;
-        const group = await Group.findOne({ where: { id } });
+        const group = await Group.findByPk(id);
         if (group) {
             group.name = name ? name : group.name;
             group.permissions = permissions ? permissions : group.permissions;
@@ -25,7 +25,7 @@ export class GroupService {
     }
 
     static async delete(id) {
-        const group = await Group.findOne({ where: { id } });
+        const group = await Group.findByPk(id);
         if (group) {
             return group.destroy();
         }

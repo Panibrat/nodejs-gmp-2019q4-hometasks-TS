@@ -5,7 +5,7 @@ import { GroupService } from '../services/group.service';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
         const data = await GroupService.getAll();
         if (data) {
@@ -15,12 +15,11 @@ router.get('/', async (req, res) => {
         res.end('Groups are not found');
     }
     catch (e) {
-        res.status(500);
-        res.end('Oooops! Internal server error :( \n' + e);
+        next(e);
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const groupId = req.params.id;
         const group = await GroupService.getById(groupId);
@@ -30,23 +29,21 @@ router.get('/:id', async (req, res) => {
         res.status(400);
         res.end('Group not found');
     } catch (e) {
-        res.status(500);
-        res.end('Oooops! Internal server error :( \n' + e);
+        next(e);
     }
 });
 
-router.post('/', checkGroupBodyMiddleware, async (req, res) => {
+router.post('/', checkGroupBodyMiddleware, async (req, res, next) => {
     try {
         const reqGroup = req.body;
         const newGroup= await GroupService.create(reqGroup);
         res.json(newGroup);
     } catch (e) {
-        res.status(500);
-        res.end('Oooops! Internal server error :( \n' + e);
+        next(e);
     }
 });
 
-router.put('/:id', checkGroupUpdateMiddleware, async (req, res) => {
+router.put('/:id', checkGroupUpdateMiddleware, async (req, res, next) => {
     try {
         const groupId = req.params.id;
         const reqGroup = req.body;
@@ -58,12 +55,11 @@ router.put('/:id', checkGroupUpdateMiddleware, async (req, res) => {
         res.status(400);
         res.end('Group is not found');
     } catch (e) {
-        res.status(500);
-        res.end('Oooops! Internal server error :( \n' + e);
+        next(e);
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         const groupId = req.params.id;
         const removedGroup = await GroupService.delete(groupId);
@@ -73,14 +69,13 @@ router.delete('/:id', async (req, res) => {
         res.status(400);
         res.end('Group is not found');
     } catch (e) {
-        res.status(500);
-        res.end('Oooops! Internal server error :( \n' + e);
+        next(e);
     }
 });
 
 router.all('*', async (req, res) => {
     res.status(404);
-    res.end('Wrong url');
+    res.end('Wrong group url');
 });
 
 export default router;
