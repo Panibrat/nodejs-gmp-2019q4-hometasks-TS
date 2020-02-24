@@ -3,6 +3,7 @@ import indexRouter from './routes';
 import usersRouter from './routes/users';
 import groupsRouter from './routes/groups';
 import userGroupRouter from './routes/user-groups';
+import customLoggerMiddleware from './middleware/customLoggerMiddleware';
 import db from './db/db';
 
 db.testConnection();
@@ -11,6 +12,8 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use('*', customLoggerMiddleware);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
