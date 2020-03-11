@@ -1,4 +1,5 @@
 import express from 'express';
+import HttpError from 'standard-http-error';
 import indexRouter from './routes';
 import usersRouter from './routes/users';
 import groupsRouter from './routes/groups';
@@ -21,11 +22,14 @@ app.use('/groups', groupsRouter);
 app.use('/user-groups', userGroupRouter);
 
 app.use((err, req, res, next) => {
+    if (err && err instanceof HttpError) {
+        res.status(err.status).send(err.message); //TODO: Ask why here is: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    }
     console.error(err.stack);
     res.status(500).send('Oooops! Internal server or db error :( \n' + err);
 });
 
-app.all('*', async (req, res) => {
+app.all('*', (req, res) => {
     res.status(404);
     res.end('Wrong url');
 });

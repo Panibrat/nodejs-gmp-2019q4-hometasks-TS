@@ -1,81 +1,44 @@
 import express from 'express';
+import HttpError from 'standard-http-error';
 import checkGroupBodyMiddleware from '../middleware/checkGroupBodyMiddleware';
-import checkGroupUpdateMiddleware from '../middleware/checkGroupUpdateMiddleware';
 import { GroupService } from '../services/group.service';
+import {runAsyncWrapper} from "../utils/helpers";
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
-    try {
-        const data = await GroupService.getAll();
-        if (data) {
-            return res.json(data);
-        }
-        res.status(400);
-        res.end('Groups are not found');
-    }
-    catch (e) {
-        next(e);
-    }
-});
+router.get('/', runAsyncWrapper(async (req, res) => {
+    const data = await GroupService.getAll();
+    return res.json(data);
+}));
 
-router.get('/:id', async (req, res, next) => {
-    try {
-        const groupId = req.params.id;
-        const group = await GroupService.getById(groupId);
-        if (group) {
-            return res.json(group);
-        }
-        res.status(400);
-        res.end('Group not found');
-    } catch (e) {
-        next(e);
-    }
-});
+router.get('/:id', runAsyncWrapper(async (req, res) => {
+    const groupId = req.params.id;
+    const group = await GroupService.getById(groupId);
+    return res.json(group);
+}));
 
-router.post('/', checkGroupBodyMiddleware, async (req, res, next) => {
-    try {
-        const reqGroup = req.body;
-        const newGroup= await GroupService.create(reqGroup);
-        res.json(newGroup);
-    } catch (e) {
-        next(e);
-    }
-});
+router.post('/', checkGroupBodyMiddleware, runAsyncWrapper(async (req, res) => {
+    const reqGroup = req.body;
+    const newGroup = await GroupService.create(reqGroup);
+    res.json(newGroup);
+}));
 
-router.put('/:id', checkGroupUpdateMiddleware, async (req, res, next) => {
-    try {
-        const groupId = req.params.id;
-        const reqGroup = req.body;
-        const updatedGroup = await GroupService.update(groupId, reqGroup);
+router.put('/:id', checkGroupBodyMiddleware, runAsyncWrapper(async (req, res) => {
+    const groupId = req.params.id;
+    const reqGroup = req.body;
+    const updatedGroup = await GroupService.updateById(groupId, reqGroup);
 
-        if (updatedGroup) {
-            return res.json(updatedGroup);
-        }
-        res.status(400);
-        res.end('Group is not found');
-    } catch (e) {
-        next(e);
-    }
-});
+    return res.json(updatedGroup);
+}));
 
-router.delete('/:id', async (req, res, next) => {
-    try {
-        const groupId = req.params.id;
-        const removedGroup = await GroupService.delete(groupId);
-        if (removedGroup) {
-            return res.json(removedGroup);
-        }
-        res.status(400);
-        res.end('Group is not found');
-    } catch (e) {
-        next(e);
-    }
-});
+router.delete('/:id', runAsyncWrapper(async (req, res) => {
+    const groupId = req.params.id;
+    const removedGroup = await GroupService.deleteById(groupId);
+    return res.json(removedGroup);
+}));
 
-router.all('*', async (req, res) => {
-    res.status(404);
-    res.end('Wrong group url');
+router.all('*', async () => {
+    throw new HttpError(404, `Wrong group url :(`);
 });
 
 export default router;

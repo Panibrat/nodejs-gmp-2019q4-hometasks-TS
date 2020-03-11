@@ -1,37 +1,47 @@
+import HttpError from 'standard-http-error';
 import { Op } from 'sequelize';
-import { User } from '../models/user.module';
+import { User } from '../models/user.model';
+import {IUserCreateData, IUserData, IUserUpdateData} from "../interfaces/user.interface";
 
 export class UserService {
-    static getAll(search, limit) {
+    static async getAll(search?: string, limit?: number): Promise<Array<IUserData>> {
         const searchLimit = limit ? limit : null;
         const whereObj = search ?
             { isDeleted: false, login: {[Op.like]: `${search}%`}}
             :
             { isDeleted: false };
 
-        return User.findAll({
+        const users = await User.findAll({
             where: whereObj,
             attributes: ['id', 'login', 'age'],
             limit: searchLimit,
             order: ['login']
         });
+        if (users && Array.isArray(users) && users.length > 0) {
+            return users;
+        }
+        throw new HttpError(404, `Can't find any user from Database :(`);
     }
 
-    static getById(id) {
-        return User.findOne({
+    static async getById(id: string): Promise<IUserData> {
+        const user = await User.findOne({
             where: {
                 id: id,
                 isDeleted: false
             },
             attributes: ['id', 'login', 'age']
         });
+        if (user) {
+            return user;
+        }
+        throw new HttpError(404, `User not found :(`);
     }
 
-    static create({ login, password, age }) {
+    static async create({ login, password, age }: IUserCreateData): Promise<IUserData> {
         return User.create({ login, password, age });
     }
 
-    static async update(id, payload) {
+    static async updateById(id: string, payload: IUserUpdateData): Promise<IUserData> {
         const { login, password, age } = payload;
         const user = await User
             .findOne({
@@ -46,10 +56,10 @@ export class UserService {
             user.age = age ? age : user.age;
             return user.save();
         }
-        return null;
+        throw new HttpError(404, `User not found :(`);
     }
 
-    static async delete(id) {
+    static async deleteById(id: string): Promise<IUserData> {
         const user = await User
             .findOne({
                          where: {
@@ -61,6 +71,6 @@ export class UserService {
             user.isDeleted = true;
             return user.save();
         }
-        return null;
+        throw new HttpError(404, `User not found :(`);
     }
 }

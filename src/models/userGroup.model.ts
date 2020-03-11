@@ -1,7 +1,7 @@
 import db from '../db/db';
 import { DataTypes, Model } from 'sequelize';
-import { Group } from './group.module';
-import { User } from './user.module';
+import { Group } from './group.model';
+import { User } from './user.model';
 
 const sequelize = db.getSequelize();
 
