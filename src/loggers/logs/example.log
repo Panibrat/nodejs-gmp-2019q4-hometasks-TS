@@ -1,0 +1,2 @@
+[33m[2020-02-24 23:38:20] [WARN] [Method Name: UserService.getById] [Params: {"id":"366"}] [Error Message: User not found][39m
+[33m[2020-02-24 23:38:59] [WARN] [Method Name: UserService.update] [Arguments: {"login":"Carla","age":18}] [Params: {"id":"222"}] [Error Message: User not found][39m

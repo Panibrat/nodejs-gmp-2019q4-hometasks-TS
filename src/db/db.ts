@@ -27,6 +27,10 @@ class Db {
     getSequelize() {
         return this.sequelize;
     }
+
+    closeConnection() {
+        this.sequelize.close();
+    }
 }
 
 export default new Db(sequelize);
