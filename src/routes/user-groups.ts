@@ -1,36 +1,19 @@
 import express from 'express';
 import { UserGroupService } from '../services/user-group.service';
+import {runAsyncWrapper} from "../utils/helpers";
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
-    try {
-        const data = await UserGroupService.getAll();
-        if (data) {
-            return res.json(data);
-        }
-        res.status(400);
-        res.end('User Groups are not found');
-    }
-    catch (e) {
-        next(e);
-    }
-});
+router.get('/', runAsyncWrapper(async (req, res) => {
+    const data = await UserGroupService.getAll();
+    return res.json(data);
+}));
 
-router.post('/:id', async (req, res, next) => {
+router.post('/:id', runAsyncWrapper(async (req, res) => {
     const groupId = req.params.id;
-    const { userIds } = req.body;
-    try {
-        const data = await UserGroupService.addUsersToGroup(groupId, userIds);
-        if (data) {
-            return res.json(data);
-        }
-        res.status(400);
-        res.end('User Groups are not found');
-    }
-    catch (e) {
-        next(e);
-    }
-});
+    const {userIds} = req.body;
+    const data = await UserGroupService.addUsersToGroup(groupId, userIds);
+    return res.json(data);
+}));
 
 export default router;

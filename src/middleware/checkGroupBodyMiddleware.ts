@@ -1,6 +1,7 @@
 import Joi from '@hapi/joi';
+import HttpError from 'standard-http-error';
 
-const groupSchema = Joi.object(
+const groupCreateSchema = Joi.object(
     {
         name: Joi.string()
             .alphanum()
@@ -13,13 +14,33 @@ const groupSchema = Joi.object(
     }
 );
 
+const groupUpdateSchema = Joi.object(
+    {
+        name: Joi.string()
+            .alphanum()
+            .min(3)
+            .max(30),
+        permissions: Joi.array()
+            .items(Joi.string())
+    }
+);
+
 const checkGroupBodyMiddleware = (req, res, next) => {
     const group = req.body;
+    const method = req.method;
+    let error = null;
+    switch (method) {
+        case 'POST':
+            error = groupCreateSchema.validate(group).error;
+            break;
+        case 'PUT':
+            error = groupUpdateSchema.validate(group).error;
+            break;
+    }
 
-    const { error } = groupSchema.validate(group);
     if (error) {
         const { message } = error.details[0];
-        return res.status(400).send(message);
+        throw new HttpError(400, message);
     }
     next();
 };
