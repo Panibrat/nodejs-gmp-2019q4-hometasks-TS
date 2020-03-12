@@ -1,8 +1,8 @@
 const customLoggerMiddleware = (req, res, next) => {
-    const time = new Date();
+    const time = new Date().toISOString();
     const { method, params, query, body } = req;
 
-    console.log(`[Time: ${time}] [Method: ${JSON.stringify(method)}] [Query: ${JSON.stringify(query)}]` +
+    console.log(`[CUSTOM LOGGER][Time: ${time}] [Method: ${JSON.stringify(method)}] [Query: ${JSON.stringify(query)}]` +
                     `[Params: ${JSON.stringify(params)}] [Body: ${JSON.stringify(body)}]`);
     next();
 };

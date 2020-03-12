@@ -23,7 +23,7 @@ const logger = createLogger(
                 if (params) {
                     messageToLog += ` [Params: ${ JSON.stringify(params) }]`;
                 }
-                messageToLog += ` [Error Message: ${ message }]`;
+                messageToLog += ` [Message: ${ message }]`;
 
                 return colorizer.colorize(info.level, messageToLog);
             }),
