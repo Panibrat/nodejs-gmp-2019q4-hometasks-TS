@@ -1,10 +1,8 @@
 import app from './app';
 import http from 'http';
-import dotenv from 'dotenv';
+import nodeConfig from './config/envConfig';
 
-dotenv.config();
-
-const port = process.env.PORT || '3030';
+const { port } = nodeConfig;
 
 app.set('port', port);
 

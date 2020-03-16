@@ -1,8 +1,13 @@
 import HttpError from 'standard-http-error';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import { Op } from 'sequelize';
 import { User } from '../models/user.model';
-import {IUserCreateData, IUserData, IUserUpdateData} from "../interfaces/user.interface";
+import {IUserCreateData, IUserData, IUserLoginData, IUserUpdateData} from "../interfaces/user.interface";
 import logger from "../loggers/winston";
+import nodeConfig from '../config/envConfig';
+
+const { tokenSecretKey, tokenExpiresIn } = nodeConfig;
 
 export class UserService {
     static async getAll(search?: string, limit?: number): Promise<Array<IUserData>> {
@@ -68,6 +73,35 @@ export class UserService {
         throw new HttpError(404, `User not found :(`);
     }
 
+    static async getByLogin(login: string): Promise<IUserLoginData> {
+        logger.log(
+            {
+                level: 'info',
+                message: 'Getting user by login',
+                method: 'UserService.getByLogin',
+                params: { login },
+            },
+        );
+        const user = await User.findOne({
+            where: {
+                login: login,
+                isDeleted: false
+            },
+            attributes: ['id', 'login', 'password']
+        });
+        if (user) {
+            return user;
+        }
+        logger.warn(
+            {
+                method: 'UserService.getByLogin',
+                params: `login: ${login}`,
+                message: 'Users are not found'
+            },
+        );
+        throw new HttpError(404, `User not found :(`);
+    }
+
     static async create({ login, password, age }: IUserCreateData): Promise<IUserData> {
         logger.log(
             {
@@ -77,7 +111,9 @@ export class UserService {
                 params: { login, password, age },
             },
         );
-        return User.create({ login, password, age });
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(password, salt);
+        return User.create({ login, password: hash, age });
     }
 
     static async updateById(id: string, payload: IUserUpdateData): Promise<IUserData> {
@@ -141,5 +177,17 @@ export class UserService {
             },
         );
         throw new HttpError(404, `User not found :(`);
+    }
+
+    static async login(username: string, password: string): Promise<string> {
+        const user = await this.getByLogin(username);
+        const isBcryptVerified = bcrypt.compareSync(password, user.password);
+
+        if (user.password !== password && !isBcryptVerified) {
+            throw new HttpError(401, `Login or password is not correct :(`);
+        }
+        let payload = { login: username, id: user.id };
+
+        return jwt.sign(payload, tokenSecretKey, { expiresIn: tokenExpiresIn });
     }
 }
