@@ -1,5 +1,4 @@
-[32m[2020-03-12 13:52:43] [INFO] [Method Name: UserService.deleteById] [Params: {"id":"11111"}] [Message: Delete current user][39m
-[33m[2020-03-12 13:52:43] [WARN] [Method Name: UserService.deleteById] [Params: {"id":"11111"}] [Message: User not found][39m
-[32m[2020-03-12 13:53:04] [INFO] [Method Name: UserService.deleteById] [Params: {"id":"1"}] [Message: Delete current user][39m
-[33m[2020-03-12 13:53:04] [WARN] [Method Name: UserService.deleteById] [Params: {"id":"1"}] [Message: User not found][39m
-[32m[2020-03-12 13:53:08] [INFO] [Method Name: UserService.deleteById] [Params: {"id":"2"}] [Message: Delete current user][39m
+[32m[2020-03-16 20:41:30] [INFO] [Method Name: UserService.getAll] [Query: {}] [Message: Getting all users][39m
+[32m[2020-03-16 20:41:43] [INFO] [Method Name: UserService.getByLogin] [Params: {"login":"Panibrat333"}] [Message: Getting user by login][39m
+[32m[2020-03-16 20:41:47] [INFO] [Method Name: UserService.create] [Params: {"login":"Panibrat333","password":"Wqwq33332asdfasfas3"}] [Message: Creating new user][39m
+[32m[2020-03-16 20:42:00] [INFO] [Method Name: UserService.getAll] [Query: {}] [Message: Getting all users][39m

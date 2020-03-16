@@ -1,9 +1,8 @@
 import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
+import nodeConfig from '../config/envConfig';
 
-dotenv.config();
-const dbUri = process.env.DB_CONNECTION_URI;
-const sequelize = new Sequelize(dbUri, {
+const { dbConnectionUri } = nodeConfig;
+const sequelize = new Sequelize(dbConnectionUri, {
     define: {
         timestamps: false
     }

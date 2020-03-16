@@ -18,3 +18,9 @@ export interface IUserUpdateData {
     password?: string;
     age?: number;
 }
+
+export interface IUserLoginData {
+    login: string;
+    password: string;
+    id: string;
+}
