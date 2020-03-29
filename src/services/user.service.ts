@@ -134,8 +134,11 @@ export class UserService {
                          }
                      });
         if (user) {
+            if (password) {
+                const salt = bcrypt.genSaltSync(10);
+                user.password = bcrypt.hashSync(password, salt);
+            }
             user.login = login ? login : user.login;
-            user.password = password ? password : user.password;
             user.age = age ? age : user.age;
             return user.save();
         }
