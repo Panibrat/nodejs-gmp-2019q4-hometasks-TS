@@ -4,7 +4,7 @@ import nodeConfig from './config/envConfig';
 
 const { port } = nodeConfig;
 
-app.set('port', port);
+app.set('port', port); //TODO: WTF?
 
 const server = http.createServer(app);
 
